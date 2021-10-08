@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+*{
+    margin:0;
+    padding:0;
+    /* overflow: hidden; */
+}
+html,body{
+    box-sizing: border-box;
+}
+.grass-top{
+    background:url(../images/grass.jpeg) top center ;
+    background-size:contain ;
+    height: 190px;
+
+}
+.grass-bottom{
+    margin-top:300px;
+    background:url(../images/grass.jpeg) top center ;
+    background-size:contain;
+    height: 190px;
+
+}
