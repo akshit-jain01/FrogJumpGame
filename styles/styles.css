@@ -1,22 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
-*{
-    margin:0;
-    padding:0;
-    /* overflow: hidden; */
+/* @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap'); */
+* {
+    margin: 0;
+    padding: 0;
 }
-html,body{
+
+html,
+body {
     box-sizing: border-box;
-}
-.grass-top{
-    background:url(../images/grass.jpeg) top center ;
-    background-size:contain ;
-    height: 190px;
 
 }
-.grass-bottom{
-    margin-top:300px;
-    background:url(../images/grass.jpeg) top center ;
-    background-size:contain;
-    height: 190px;
 
+
+
+.grass-top {
+    background: url(../images/grass.jpeg) top center;
+    background-size: contain;
+    height: 30vh;
+}
+
+#river {
+    background: url(../images/waterbody2.jpg) bottom center no-repeat;
+    background-size: cover;
+    height: 40vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+}
+
+.grass-bottom {
+
+    background: url(../images/grass.jpeg) top center;
+    background-size: contain;
+    height: 30vh;
+
+}
+
+.log {
+    height: 140px;
+    width: 140px;
+}
+.game-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative;
+}
+.frog {
+    
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    left:47vw;
+    bottom:100px;
 }
