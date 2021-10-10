@@ -39,6 +39,13 @@ var Engine =
     function render() {
         
         var rowImages = [ 
+            
+            'images/water-block.png', // Top row is water
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/grass-block.jpg' // Row 2 of 2 of grass
             ],// path to images
             numRows = 6,
             numCols = 5,
@@ -66,7 +73,7 @@ var Engine =
         
     }
     
-    Resources.load([]);//will contain images paths
+    Resources.load(['images/stone-block.png', 'images/water-block.png', 'images/grass-block.jpg', 'images/snake.png', 'images/frog-green.svg']);//will contain images paths
     Resources.onReady(init);
     global.ctx = ctx;    
     

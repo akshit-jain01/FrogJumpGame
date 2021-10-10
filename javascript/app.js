@@ -1,7 +1,7 @@
 var Enemy = function(positionX, positionY, speed) {
     this.positionX = positionX;
     this.positionY = positionY + 60;
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = 'images/snake.png';
     this.speed = speed;
 };
 // Update the enemy's position
@@ -21,7 +21,7 @@ class Player {
     constructor() {
             this.positionX = 102 * 2;
             this.positionY = 83 * 5 - 10;
-            this.sprite = 'images/char-boy.png';
+            this.sprite = 'images/frog-green.svg';
             this.complete = false;
         }
         /*collision*/
