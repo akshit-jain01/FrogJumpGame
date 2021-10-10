@@ -31,7 +31,6 @@
                     readyCallbacks.forEach(function(func) { func(); });
                 }
             };
-
             
             resourceCache[url] = false;
             img.src = url;
