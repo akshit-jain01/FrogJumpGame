@@ -22,9 +22,6 @@ body {
     background: url(../images/waterbody2.jpg) bottom center no-repeat;
     background-size: cover;
     height: 40vh;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
     overflow: hidden;
 }
 
