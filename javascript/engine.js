@@ -35,9 +35,40 @@ var Engine =
 		});
 		player.update();
 	}
-}
-    
 
+    function render() {
+        
+        var rowImages = [ 
+            ],// path to images
+            numRows = 6,
+            numCols = 5,
+            row, col;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (row = 0; row < numRows; row++) {
+            for (col = 0; col < numCols; col++) {
+                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+            }
+        }
+        renderEntities();
+    }
     
-);
+    function renderEntities() {
+        
+        allEnemies.forEach(function(enemy) {
+            enemy.render();
+        });
+        player.render();
+    }
+    
+    function reset() {
+        
+    }
+    
+    Resources.load([]);//will contain images paths
+    Resources.onReady(init);
+    global.ctx = ctx;    
+    
+})(this);
 
