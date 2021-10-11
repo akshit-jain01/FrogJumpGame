@@ -98,9 +98,7 @@ input.button {
     text-align: center;
 }
 
-.win-modal-container.show .modal {
-    animation: modal .5s;
-}
+
 
 .modal-win h2,
 h3 {

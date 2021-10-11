@@ -1,5 +1,5 @@
 
-var Enemy = function(positionX, positionY, speed) {
+var Snake = function(positionX, positionY, speed) {
     this.positionX = positionX;
     this.positionY = positionY + 60;
     this.sprite = 'images/snake.png';
@@ -7,7 +7,7 @@ var Enemy = function(positionX, positionY, speed) {
 };
 // Update the enemy's position
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+Snake.prototype.update = function(dt) {
     if (this.positionX <= 1400) {
         this.positionX += this.speed * dt;
     } else {
@@ -15,12 +15,12 @@ Enemy.prototype.update = function(dt) {
     }
 };
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+Snake.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.positionX, this.positionY);
 };
 class Player {
     constructor() {
-            this.positionX = 102 * 2;
+            this.positionX = 102 * 7;
             this.positionY = 83 * 5 - 10;
             this.sprite = 'images/frog-green.svg';
             this.complete = false;
@@ -28,20 +28,23 @@ class Player {
         
         /*collision*/
     update() {
-            for (let enemy of allEnemies) {
-                if (this.positionX < enemy.positionX + 50 && this.positionX + 50 > enemy.positionX && this.positionY < enemy.positionY + 60 && this.positionY + 60 > enemy.positionY) {
+            for (let Snake of allSnakes) {
+                if (this.positionX < Snake.positionX + 50 && this.positionX + 50 > Snake.positionX && this.positionY < Snake.positionY + 60 && this.positionY + 60 > Snake.positionY) {
                     this.reset();
                 }
             }
             //game winning condition
-            if (this.positionY === -10 ) {
+            console.log(this.positionY);
+            if (this.positionY === 0 ) {
                 const winScreen = document.querySelector('#winScreen');
                 winScreen.classList.add('show');
                 const buttonPlayAgain = document.querySelector('#playAgain');
                 buttonPlayAgain.focus();
                 buttonPlayAgain.addEventListener('click', function() {
                     winScreen.classList.remove('show');
+                    // startScreen();
                     player.reset();
+                    
                 });
             }
         }
@@ -65,20 +68,22 @@ class Player {
         }
         /*reset player back to the starting point after the collision*/
     reset() {
-        this.positionX = 102 * 2;
-        this.positionY = 83 * 5 - 10;
+        this.positionX = 102 * 7;
+        this.positionY = 83 * 6;
     }
 
 }
 const player = new Player();
-const enemy1 = new Enemy(-100, 200, 230);
-const enemy2 = new Enemy(-202, 83, 530);
-const enemy3 = new Enemy(-302, 103, 330);
-const enemy4 = new Enemy(-402, -50, 430);
-const enemy5 = new Enemy(-502, 90, 430);
-const enemy6 = new Enemy(-602, 30, 230);
-const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3, enemy4,enemy5,enemy6);
+const snake1 = new Snake(500, 83, 600);
+const snake2 = new Snake(400, 30, 530);
+const snake3 = new Snake(600, 57, 830);
+const snake4 = new Snake(820, 50,860);
+const snake5 = new Snake(520, 90, 630);
+const snake6 = new Snake(540, 60, 790);
+const snake7 = new Snake(440, 10, 890);
+const snake8 = new Snake(640, -7, 990);
+const allSnakes = [];
+allSnakes.push(snake1, snake2,snake3, snake4,snake5,snake6,snake7,snake8);
 // This listens for key presses and sends the keys to player
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
@@ -88,6 +93,7 @@ document.addEventListener('keyup', function(e) {
         "ArrowDown": 'down'
     };
     player.handleInput(allowedKeys[e.key]);
+    
 });
 
 function startScreen() {

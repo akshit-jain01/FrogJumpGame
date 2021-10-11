@@ -28,7 +28,11 @@
 
 
                 if (isReady()) {
-                    readyCallbacks.forEach(function (func) { func(); });
+                    readyCallbacks.forEach(
+                        function (func) 
+                        { 
+                            func(); 
+                        });
                 }
             };
 
@@ -44,9 +48,8 @@
 
     function isReady() {
         var ready = true;
-        for (var k in resourceCache) {
-            if (resourceCache.hasOwnProperty(k) &&
-                !resourceCache[k]) {
+        for (let k in resourceCache) {
+            if (resourceCache.hasOwnProperty(k) && !resourceCache[k]) {
                 ready = false;
             }
         }

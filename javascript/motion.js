@@ -7,7 +7,7 @@ var Engine =
 		ctx = canvas.getContext('2d'),
 		lastTime;
 	canvas.width = 1500;
-	canvas.height = 560;
+	canvas.height = 650;
 	doc.body.appendChild(canvas);
     
     // It initializes the lastTime variable with the current time in secs and calls main.
@@ -16,8 +16,8 @@ var Engine =
         main();
     }
     function update(dt) {
-        allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+        allSnakes.forEach(function(snake) {
+            snake.update(dt);
         });
         player.update();
     }
@@ -62,8 +62,8 @@ var Engine =
     
     function renderEntities() {
         
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
+        allSnakes.forEach(function(snake) {
+            snake.render();
         });
         player.render();
     }
