@@ -1,3 +1,4 @@
+
 var Enemy = function(positionX, positionY, speed) {
     this.positionX = positionX;
     this.positionY = positionY + 60;
@@ -7,10 +8,10 @@ var Enemy = function(positionX, positionY, speed) {
 // Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    if (this.positionX <= 405) {
+    if (this.positionX <= 1400) {
         this.positionX += this.speed * dt;
     } else {
-        this.positionX = -2;
+        this.positionX = -500;
     }
 };
 // Draw the enemy on the screen, required method for game
@@ -24,6 +25,7 @@ class Player {
             this.sprite = 'images/frog-green.svg';
             this.complete = false;
         }
+        
         /*collision*/
     update() {
             for (let enemy of allEnemies) {
@@ -32,7 +34,7 @@ class Player {
                 }
             }
             //game winning condition
-            if (this.positionY === -10) {
+            if (this.positionY === -10 ) {
                 const winScreen = document.querySelector('#winScreen');
                 winScreen.classList.add('show');
                 const buttonPlayAgain = document.querySelector('#playAgain');
@@ -51,13 +53,13 @@ class Player {
             if (keyPress == 'left' && this.positionX > 0) {
                 this.positionX -= 102;
             };
-            if (keyPress == 'right' && this.positionX < 405) {
+            if (keyPress == 'right' && this.positionX < 1400) {
                 this.positionX += 102;
             };
             if (keyPress == 'up' && this.positionY > 0) {
                 this.positionY -= 83;
             };
-            if (keyPress == 'down' && this.positionY < 405) {
+            if (keyPress == 'down' && this.positionY < 400) {
                 this.positionY += 83;
             };
         }
@@ -66,23 +68,26 @@ class Player {
         this.positionX = 102 * 2;
         this.positionY = 83 * 5 - 10;
     }
+
 }
 const player = new Player();
-const enemy1 = new Enemy(-102, 170, 100);
-const enemy2 = new Enemy((-102 * 3), 83, 130);
-const enemy3 = new Enemy(-102, 83, 130);
-const enemy4 = new Enemy(-102, 0, 300);
+const enemy1 = new Enemy(-100, 200, 230);
+const enemy2 = new Enemy(-202, 83, 530);
+const enemy3 = new Enemy(-302, 103, 330);
+const enemy4 = new Enemy(-402, -50, 430);
+const enemy5 = new Enemy(-502, 90, 430);
+const enemy6 = new Enemy(-602, 30, 230);
 const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3, enemy4);
+allEnemies.push(enemy1, enemy2, enemy3, enemy4,enemy5,enemy6);
 // This listens for key presses and sends the keys to player
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
+        "ArrowLeft": 'left',
+        "ArrowUp": 'up',
+        "ArrowRight": 'right',
+        "ArrowDown": 'down'
     };
-    player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(allowedKeys[e.key]);
 });
 
 function startScreen() {
