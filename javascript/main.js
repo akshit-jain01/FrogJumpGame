@@ -1,108 +1,78 @@
-
-var Snake = function(positionX, positionY, speed) {
-    this.positionX = positionX;
-    this.positionY = positionY + 60;
-    this.sprite = 'images/snake.png';
-    this.speed = speed;
-};
-// Update the enemy's position
-// Parameter: dt, a time delta between ticks
-Snake.prototype.update = function(dt) {
-    if (this.positionX <= 1400) {
-        this.positionX += this.speed * dt;
-    } else {
-        this.positionX = -500;
-    }
-};
-// Draw the enemy on the screen, required method for game
-Snake.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.positionX, this.positionY);
-};
-class Player {
-    constructor() {
-            this.positionX = 102 * 7;
-            this.positionY = 83 * 5 - 10;
-            this.sprite = 'images/frog-green.svg';
-            this.complete = false;
-        }
-        
-        /*collision*/
-    update() {
-            for (let Snake of allSnakes) {
-                if (this.positionX < Snake.positionX + 50 && this.positionX + 50 > Snake.positionX && this.positionY < Snake.positionY + 60 && this.positionY + 60 > Snake.positionY) {
-                    this.reset();
-                }
-            }
-            //game winning condition
-            console.log(this.positionY);
-            if (this.positionY === 0 ) {
-                const winScreen = document.querySelector('#winScreen');
-                winScreen.classList.add('show');
-                const buttonPlayAgain = document.querySelector('#playAgain');
-                buttonPlayAgain.focus();
-                buttonPlayAgain.addEventListener('click', function() {
-                    winScreen.classList.remove('show');
-                    // startScreen();
-                    player.reset();
-                    
-                });
-            }
-        }
-        /*display the player on the game board*/
-    render() {
-        ctx.drawImage(Resources.get(this.sprite), this.positionX, this.positionY);
-    }
-    handleInput(keyPress) {
-            if (keyPress == 'left' && this.positionX > 0) {
-                this.positionX -= 102;
-            };
-            if (keyPress == 'right' && this.positionX < 1400) {
-                this.positionX += 102;
-            };
-            if (keyPress == 'up' && this.positionY > 0) {
-                this.positionY -= 83;
-            };
-            if (keyPress == 'down' && this.positionY < 400) {
-                this.positionY += 83;
-            };
-        }
-        /*reset player back to the starting point after the collision*/
-    reset() {
-        this.positionX = 102 * 7;
-        this.positionY = 83 * 6;
-    }
-
-}
-const player = new Player();
-const snake1 = new Snake(500, 83, 600);
-const snake2 = new Snake(400, 30, 530);
-const snake3 = new Snake(600, 57, 830);
-const snake4 = new Snake(820, 50,860);
-const snake5 = new Snake(520, 90, 630);
-const snake6 = new Snake(540, 60, 790);
-const snake7 = new Snake(440, 10, 890);
-const snake8 = new Snake(640, -7, 990);
-const allSnakes = [];
-allSnakes.push(snake1, snake2,snake3, snake4,snake5,snake6,snake7,snake8);
-// This listens for key presses and sends the keys to player
-document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
-        "ArrowLeft": 'left',
-        "ArrowUp": 'up',
-        "ArrowRight": 'right',
-        "ArrowDown": 'down'
-    };
-    player.handleInput(allowedKeys[e.key]);
+var Motion = 
+(
+    function(global) {
+	var doc = global.document,
+		win = global.window,
+		canvas = doc.createElement('canvas'),
+		ctx = canvas.getContext('2d'),
+		lastTime;
+	canvas.width = 1500;
+	canvas.height = 650;
+	doc.body.appendChild(canvas);
     
-});
+    // It initializes the lastTime variable with the current time in secs and calls main.
+    function init(){
+        lastTime=Date.now;
+        main();
+    }
+    function update(dt) {
+        allSnakes.forEach(function(snake) {
+            snake.update(dt);
+        });
+        player.update();
+    }
+    // It calculates the slight difference between time to refresh the frame of animation to show images correctly
+    function main() {
+        var now = Date.now(),
+        dt = (now - lastTime) / 1000.0;
+		update(dt);
+		render(); 
+		lastTime = now;
+		win.requestAnimationFrame(main);
+	}
+    
+    // Gives the images back to the main at each request frame.
+    function render() {
+        
+        var rowImages = [ 
+            
+            'images/water-block.png', // Top row is water
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/stone-block.png', // Row 1 of 3 of stone
+            'images/grass-block.jpg', // Row 2 of 2 of grass
+            'images/grass-block.jpg', // Row 2 of 2 of grass
+            'images/grass-block.jpg' // Row 2 of 2 of grass
+            ],// path to images
+            numRows = 8,
+            numCols = 15,
+            row, col;
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (row = 0; row < numRows; row++) 
+        {
+            for (col = 0; col < numCols; col++) {
+                ctx.drawImage(Resources.get(rowImages[row]), col * 102, row * 83);
+            }
+        }
+        renderEntities();
+    }
+    // Calls the render functions provided for the snake and the player ie. frog
+    function renderEntities() {
+        
+        allSnakes.forEach(function(snake) {
+            snake.render();
+        });
+        player.render();
+    }
+    
+    
+    
+    Resources.load(['images/stone-block.png', 'images/water-block.png', 'images/grass-block.jpg', 'images/snake.png', 'images/frog-green.svg']);//will contain images paths
+    Resources.onReady(init);
+    global.ctx = ctx;    
+    
+})(this);
 
-function startScreen() {
-    const startScreen = document.querySelector('#startScreen');
-    startScreen.classList.add('show');
-    const buttonPlay = document.querySelector('#playGame');
-    buttonPlay.focus();
-    buttonPlay.addEventListener('click', function() {
-        startScreen.classList.remove('show');
-    });
-}
-window.onload = startScreen();
