@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+vector<int> shortest_path(vector<vector<int>> &edges, int N, int M, int src){
+    vector<int> adj_lst[N];
+    for(auto iterator: edges){
+        adj_lst[iterator[0]].push_back(iterator[1]);
+        adj_lst[iterator[1]].push_back(iterator[0]);
+    }
+    vector<int> distance(N, INT_MAX);
+    distance[src] = 0;
+    queue<int> q;
+    q.push(src);
+    while(!q.empty()){
+        int node = q.front();
+        q.pop();
+        for(auto iterator: adj_lst[node]){
+            if(distance[iterator]>distance[node]+1){
+                distance[iterator] = distance[node]+1;
+                q.push(iterator);
+            }
+        }
+    }
+    return distance;
+}
+int main(){
+    int N, M;
+    cin >> N >> M;
+    vector<vector<int>> edges(M, vector<int>(2));
+    for(int i = 0; i < M; i++){
+        cin >> edges[i][0] >> edges[i][1];
+    }
+    int src;
+    cin >> src;
+
+    vector<int> dist = shortest_path(edges, N, M, src);
+
+    for(int i = 0; i < N; i++){
+        if(dist[i] == INT_MAX) cout << -1 << " ";  // unreachable node
+        else cout << dist[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
